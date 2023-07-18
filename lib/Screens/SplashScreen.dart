@@ -3,6 +3,7 @@ import 'package:new_ecommerce/Screens/BoardingScreen.dart';
 import 'package:new_ecommerce/Screens/BottomNavBarScreen.dart';
 import 'package:new_ecommerce/Screens/LoginScreen.dart';
 
+import '../Constants/Constants.dart';
 import 'HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -38,11 +39,23 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Image.asset(
-          'assets/images/logoblue.png',
-          height: 200,
-          width: 200,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppColors.SecondaryColor.withOpacity(.3),
+                AppColors.MainColor.withOpacity(.7),
+              ] ),
+        ),
+
+        child: Center(
+          child: Image.asset(
+            'assets/images/logoblue.png',
+            height: 200,
+            width: 200,
+          ),
         ),
       ),
     );

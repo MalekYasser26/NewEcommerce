@@ -22,17 +22,38 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   },
   builder: (context, state) {
     return Scaffold(
+      extendBody: true, // Set this property to true to remove the padding between the navigation bar and body
       bottomNavigationBar: Container(
-margin: EdgeInsets.symmetric(horizontal: 35),
-         decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Color(0xFF333333)),
-        height:kBottomNavigationBarHeight,
-        child:ListView.separated(
-          separatorBuilder: (context, index) => SizedBox(width: 30,),
-          itemCount: 5,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, currIndex) => Padding(
-            padding: const EdgeInsets.only(left: 6.0,right: 10,top: 8,bottom: 8),
-            child: InkWell(
+        decoration: BoxDecoration(
+          gradient: index !=0 ? LinearGradient(
+            begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+            AppColors.MainColor.withOpacity(0.7),
+            AppColors.SecondaryColor.withOpacity(0.3)
+          ]) : LinearGradient(colors: [Colors.transparent , Colors.transparent])
+        ),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 35),
+          padding: EdgeInsets.only(left: 6, right: 6, top: 8, bottom: 8), // Add padding to adjust the content
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            gradient: LinearGradient(
+              end: Alignment.centerLeft,
+              begin: Alignment.centerRight,
+              colors: [
+                AppColors.SecondaryColor.withOpacity(.3),
+                AppColors.MainColor.withOpacity(.7),
+
+              ],
+            ),
+          ),
+          height: kBottomNavigationBarHeight,
+          child: ListView.separated(
+            separatorBuilder: (context, index) => SizedBox(width: 30),
+            itemCount: 5,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, currIndex) => InkWell(
               onTap: () {
                 setState(() {
                   print("tapped");
@@ -40,17 +61,19 @@ margin: EdgeInsets.symmetric(horizontal: 35),
                   BlocProvider.of<CustBottomNavCubit>(context).SelectIndex(index: currIndex);
                 });
               },
-              child: Icon(BotNavIcons[currIndex],
-                color:index == currIndex?
-                AppColors.SecondaryColor:Colors.white,),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 6.0, right: 10),
+                child: Icon(
+                  BotNavIcons[currIndex],
+                  color: index == currIndex ? AppColors.SecondaryColor : Colors.white,
+                ),
+              ),
             ),
           ),
-        )
-
-
+        ),
       ),
-      body:  BlocProvider.of<CustBottomNavCubit>(context).Screens[
-      BlocProvider.of<CustBottomNavCubit>(context).bottomNavIndex],);
+      body: BlocProvider.of<CustBottomNavCubit>(context).Screens[BlocProvider.of<CustBottomNavCubit>(context).bottomNavIndex],
+    );
   },
 );
   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -37,5 +38,17 @@ class LoginCubit extends Cubit<LoginState> {
         }
       }
     }
+
+  @override
+  LoginState? fromJson(Map<String, dynamic> json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
+
+  @override
+  Map<String, dynamic>? toJson(LoginState state) {
+    // TODO: implement toJson
+    throw UnimplementedError();
+  }
 
 }

@@ -5,7 +5,7 @@ class AppColors {
   static const Color MainColor = Color(0xFF3b3cb0);
   static const Color SecondaryColor = Color(0xffb74a4b);
   static const Color accentColor = Color(0xFFFFCC00);
-  late final bool onBoarding;
+
 }
 class apiLink{
   static const String baseUrl = "https://student.valuxapps.com/api/";
@@ -14,7 +14,7 @@ class apiLink{
 
 List <String> Categories=[
   "Headphones",
-  "Smartphone",
+  "Smartphones",
   "Clothes",
   "Games",
   "Laptops",
@@ -38,6 +38,39 @@ List<IconData>BotNavIcons=[
   Icons.person_outline
 
 ];
+List<String>ProfileText=[
+  "Contact Information",
+  "Payment Methods",
+  "My orders",
+  "My reviews",
+  "Promocodes",
+  "Settings",
+  "Logout"
+];
+List<IconData>ProfileIcons=[
+Icons.contact_page_outlined,
+Icons.credit_card,
+Icons.shopping_cart,
+Icons.reviews_outlined,
+Icons.discount_outlined,
+Icons.settings,
+Icons.logout
+];
+List<String>ProfileSubText=[
+  "Phone Number, Email, Address",
+  "Visa **85",
+  "Have 8 orders",
+  "Reviews for 8 items ",
+  "You have special promocodes",
+  "Notifications, passwords",
+  "Logout , change accounts"
+
+];
+
+
 
 //m@m.mm
 //12345678
+//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     github token
+//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
+//color: Color(0xFF333333)

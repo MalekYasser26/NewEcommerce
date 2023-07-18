@@ -25,76 +25,83 @@ void Submit(){
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      backgroundColor: Colors.white,
         body:
-      Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                onPageChanged: (value) {
-                  Bindex = value ;
-                  setState(() {
-                  });
-                },
-                physics: BouncingScrollPhysics(),
-                controller: PVController,
-                itemBuilder: (context, index) {
-                  return BoardingItem(BoardingModelItems[index],);
-                },
-              itemCount: BoardingModelItems.length,
-              ),
-            ),
-            SizedBox(height: 20,),
-            Row(
+      Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppColors.SecondaryColor.withOpacity(.3),
+                AppColors.MainColor.withOpacity(.7),
+              ] ),
+        ),
 
-              children: [
-                Expanded(
-                  flex: 2,
-                    child: SizedBox(width: 10,)),
-                Expanded(
-                  flex: 2,
-                  child: SmoothPageIndicator(effect: ColorTransitionEffect(),
-                      controller: PVController,
-                      count: BoardingModelItems.length),
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView.builder(
+                  onPageChanged: (value) {
+                    Bindex = value ;
+                    setState(() {
+                    });
+                  },
+                  physics: BouncingScrollPhysics(),
+                  controller: PVController,
+                  itemBuilder: (context, index) {
+                    return BoardingItem(BoardingModelItems[index],);
+                  },
+                itemCount: BoardingModelItems.length,
                 ),
+              ),
+              SizedBox(height: 20,),
+              Row(
 
-                FloatingActionButton(
-                  backgroundColor: AppColors.MainColor,
-                  child: Bindex ==2 ?Icon(Icons.arrow_back_ios_outlined) :
-                  Icon(Icons.arrow_forward_ios_outlined),
+                children: [
+                  Expanded(
+                    flex: 2,
+                      child: SizedBox(width: 10,)),
+                  Expanded(
+                    flex: 2,
+                    child: SmoothPageIndicator(effect: ColorTransitionEffect(),
+                        controller: PVController,
+                        count: BoardingModelItems.length),
+                  ),
+
+                  FloatingActionButton(
+                    backgroundColor: AppColors.MainColor,
+                    child: Bindex ==2 ?Icon(Icons.arrow_back_ios_outlined) :
+                    Icon(Icons.arrow_forward_ios_outlined),
+                    onPressed: () {
+                      print(Bindex);
+                     Bindex !=2 ? PVController.nextPage(duration: Duration(milliseconds: 1000),
+                          curve: Curves.easeInOutCubicEmphasized) :
+                     PVController.jumpToPage(0) ;
+                    setState(() {
+                    });
+                    },)
+
+                ],
+              ) ,
+              ElevatedButton(
+                  style:ButtonStyle(
+                    backgroundColor: Bindex ==2 ? MaterialStatePropertyAll(AppColors.MainColor) :
+                        MaterialStatePropertyAll(Colors.grey)
+                  ) ,
                   onPressed: () {
-                    print(Bindex);
-                   Bindex !=2 ? PVController.nextPage(duration: Duration(milliseconds: 1000),
-                        curve: Curves.easeInOutCubicEmphasized) :
-                   PVController.jumpToPage(0) ;
-                  setState(() {
-                  });
-                  },)
-
-              ],
-            ) ,
-            ElevatedButton(
-                style:ButtonStyle(
-                  backgroundColor: Bindex ==2 ? MaterialStatePropertyAll(AppColors.MainColor) :
-                      MaterialStatePropertyAll(Colors.grey)
-                ) ,
-                onPressed: () {
-                  if (Bindex==2){
-                    Submit();
-                } else {print("Nope");}
-                  } ,
-                child:Bindex==2 ? Text("Finished") :
-                const Text("Finished", style: TextStyle(decoration: TextDecoration.lineThrough
-                , decorationThickness: 4
-                ),)
-            )
-          ],
+                    if (Bindex==2){
+                      Submit();
+                  } else {print("Nope");}
+                    } ,
+                  child:Bindex==2 ? Text("Finished") :
+                  const Text("Finished", style: TextStyle(decoration: TextDecoration.lineThrough
+                  , decorationThickness: 4
+                  ),)
+              )
+            ],
+          ),
         ),
       )
 
@@ -103,7 +110,7 @@ void Submit(){
 
   Widget BoardingItem(BoardingModel model)=> Column(
     children: [
-      Expanded(child: Image.asset('${model.image}')),
+      Expanded(child: Image.asset('${model.image}',)),
       SizedBox(height: 10,),
       Text("${model.title}" , style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
       , SizedBox(height: 10,),
