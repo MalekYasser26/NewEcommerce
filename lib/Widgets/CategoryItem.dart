@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_ecommerce/Constants/Constants.dart';
+import 'package:new_ecommerce/Screens/ItemScreen.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({Key? key, required this.catIcon, required this.catText}) : super(key: key);

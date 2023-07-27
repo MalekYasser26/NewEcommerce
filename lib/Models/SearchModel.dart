@@ -20,7 +20,7 @@ class userData{
     price = json['price'];
     image = json['image'];
     name = json['name'];
-    desc = json['descriptions'];
+    desc = json['description'];
     images = json['images'];
     in_fav = json['in_favorites'];
     in_cart = json['in_cart'];

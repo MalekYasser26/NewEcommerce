@@ -25,7 +25,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       extendBody: true, // Set this property to true to remove the padding between the navigation bar and body
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          gradient: index !=0 ? LinearGradient(
+          gradient: index !=0 && index !=1 ? LinearGradient(
             begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [

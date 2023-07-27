@@ -23,7 +23,6 @@ class ProfileScreen extends StatelessWidget {
             ),
 
           ),
-          leading: Icon(Icons.arrow_back_ios,color: AppColors.MainColor),
         //  elevation: 0,
           centerTitle: true,
           title: Text("Profile" , style: TextStyle(color: Colors.black,fontSize: 30,)),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../Widgets/CartItemWidgets.dart';
+
 class AppColors {
   static const Color MainColor = Color(0xFF3b3cb0);
   static const Color SecondaryColor = Color(0xffb74a4b);
@@ -8,7 +10,7 @@ class AppColors {
 
 }
 class apiLink{
-  static const String baseUrl = "https://student.valuxapps.com/api/";
+  static const String baseUr0l = "https://student.valuxapps.com/api/";
 
 }
 
@@ -66,6 +68,8 @@ List<String>ProfileSubText=[
   "Logout , change accounts"
 
 ];
+List cartList = [];
+
 
 
 

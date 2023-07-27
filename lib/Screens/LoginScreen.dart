@@ -39,19 +39,19 @@ GlobalKey<FormState> formkey = GlobalKey();
       backgroundColor: Colors.white,
       body: Form(
         key: formkey,
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.SecondaryColor.withOpacity(.3),
-                    AppColors.MainColor.withOpacity(.7),
-                  ] ),
-            ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  AppColors.MainColor.withOpacity(.7),
+                  AppColors.SecondaryColor.withOpacity(.3),
+                ] ),
+          ),
 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

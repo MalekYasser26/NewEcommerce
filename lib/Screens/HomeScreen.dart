@@ -7,14 +7,9 @@ import 'package:new_ecommerce/Widgets/SuggestionItem.dart';
 
 import '../Cubit/main_cubit.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var mainCubit = BlocProvider.of<MainCubit>(context) ;
@@ -166,7 +161,10 @@ extendBody: true,
                   physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) =>productItem(productText: "${mainCubit.ProductData[index].name}",
-                    imgPath:"${mainCubit.ProductData[index].image}" )
+                    imgPath:"${mainCubit.ProductData[index].image}",price:"${mainCubit.ProductData[index].price}" ,
+                    desc: "${mainCubit.ProductData[index].description}",
+                      index: index,
+                    )
                     , separatorBuilder: (context, index) => SizedBox(width: 10,), itemCount: 6),
               )
 

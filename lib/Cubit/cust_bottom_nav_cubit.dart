@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:new_ecommerce/Screens/CartScreen.dart';
 import 'package:new_ecommerce/Screens/HomeScreen.dart';
+import 'package:new_ecommerce/Screens/ItemScreen.dart';
 import 'package:new_ecommerce/Screens/ProfileScreen.dart';
 
 import '../Screens/FavScreen.dart';

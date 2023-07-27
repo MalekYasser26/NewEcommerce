@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_ecommerce/Constants/Constants.dart';
 import 'package:new_ecommerce/Cubit/login_cubit.dart';
 import 'package:new_ecommerce/Cubit/search_cubit.dart';
+import 'package:new_ecommerce/Screens/ItemScreen.dart';
 
 
 class SearchScreen extends StatefulWidget {
@@ -30,57 +31,60 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Scaffold(
             extendBody: true,
             appBar: AppBar(
-              elevation: 0,
               toolbarHeight: 75,
               backgroundColor: Colors.transparent,
-              flexibleSpace:                 Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        AppColors.MainColor.withOpacity(.7),
+              flexibleSpace:                 Material(
+                elevation: 4,
+                child: Container(
+                  height:100,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          AppColors.SecondaryColor.withOpacity(.3),
 
-                        AppColors.SecondaryColor.withOpacity(.3),
-                      ] ),
-                ),
+                          AppColors.MainColor.withOpacity(.7),
 
-                child: Padding(
-                  padding: const EdgeInsets.only( left:  8.0,right: 8,top: 8),
-                  child: TextFormField(
-                    controller: BlocProvider.of<SearchCubit>(context).SearchedDATAController,
-                    onTapOutside: (event) =>
-                        FocusManager.instance.primaryFocus?.unfocus(),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)
-                        ),
-                        label: Text("Search",style: TextStyle(color: AppColors.SecondaryColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(color: AppColors.MainColor)
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(color: AppColors.SecondaryColor)
-                        ),
-                        labelStyle: TextStyle(color: AppColors.MainColor),
-                        suffixIcon: GestureDetector(
-                            onTap: () {
-                              print("reached here");
+                        ] ),
+                  ),
 
-                              BlocProvider.of<SearchCubit>(context).Search(
-                                  SearchedData: BlocProvider.of<SearchCubit>(context).SearchedDATAController.text );
-                              print("Searched success");
+                  child: Padding(
+                    padding: const EdgeInsets.only( left:  8.0,right: 8,top: 8,bottom: 8),
+                    child: TextFormField(
+                      controller: BlocProvider.of<SearchCubit>(context).SearchedDATAController,
+                      onTapOutside: (event) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          label: Text("Search",style: TextStyle(color: AppColors.SecondaryColor)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(color: AppColors.MainColor)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(color: AppColors.SecondaryColor)
+                          ),
+                          labelStyle: TextStyle(color: AppColors.MainColor),
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                print("reached here");
 
-                            }
-                            ,
-                            child: Icon(Icons.search_rounded,color: AppColors.SecondaryColor,))
+                                BlocProvider.of<SearchCubit>(context).Search(
+                                    SearchedData: BlocProvider.of<SearchCubit>(context).SearchedDATAController.text );
+                                print("Searched success");
+
+                              }
+                              ,
+                              child: Icon(Icons.search_rounded,color: AppColors.SecondaryColor,))
+                      ),
+
                     ),
 
                   ),
-
                 ),
               ),
 
@@ -97,6 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ] ),
               ),
               child: ListView(
+                physics: BouncingScrollPhysics(),
                 children: [
                   SizedBox(
                     child: Padding(
@@ -109,7 +114,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           itemCount:searchCubit.dataListLength ,
                           scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) => Container(
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                ItemScreen(index: index  ,
+                                    desc:  searchCubit.searchModel?.datalIST[index].desc ,
+                                img: searchCubit.searchModel?.datalIST[index].image ,
+                                    text:  searchCubit.searchModel?.datalIST[index].name ,
+                                    price: searchCubit.searchModel?.datalIST[index].price ),)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -119,7 +130,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    children : [ Text(searchCubit.searchModel?.datalIST[index].name ,
+                                    children : [
+                                      Text(searchCubit.searchModel?.datalIST[index].name ,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(fontSize: 20),
