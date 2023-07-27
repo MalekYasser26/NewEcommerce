@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:new_ecommerce/Cubit/search_cubit.dart';
 import 'package:new_ecommerce/Widgets/CartItemWidgets.dart';
 
 import '../Constants/Constants.dart';
 
-class ItemScreen extends StatelessWidget {
+class ItemScreen extends StatefulWidget {
    ItemScreen({Key? key, required this.index, required this.img, required this.desc, required this.text, required this.price}) : super(key: key);
    var index , img , desc , text , price ;
+
+  @override
+  State<ItemScreen> createState() => _ItemScreenState();
+}
+
+class _ItemScreenState extends State<ItemScreen> {
    var x = cartList.length ;
 
    @override
   Widget build(BuildContext context) {
+     var searchCubit = BlocProvider.of<SearchCubit>(context);
      return Scaffold(
           extendBody: true,
           body: Container(
@@ -40,7 +49,7 @@ class ItemScreen extends StatelessWidget {
               child: Container(
                 height: 350,
                 width: 400,
-                child: Image.network("$img",fit: BoxFit.fill),
+                child: Image.network("${widget.img}",fit: BoxFit.fill),
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: AppColors.MainColor)),
               ),
             ),
@@ -53,7 +62,7 @@ class ItemScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0,left: 37),
-                  child: Text("$text",
+                  child: Text("${widget.text}",
                     maxLines: 1,
                     style: TextStyle(
                     color: Colors.black,fontWeight: FontWeight.bold,
@@ -61,14 +70,14 @@ class ItemScreen extends StatelessWidget {
                 ), // Text
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0,left: 37,right: 5,bottom: 7),
-                  child: Text("$desc",
+                  child: Text("${widget.desc}",
                     style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300,fontSize: 14),maxLines: 4,overflow: TextOverflow.ellipsis),
                 ), // SUBTEXT
                 Padding(
                   padding: const EdgeInsets.only(left: 37.0,top: 8,right: 45),
                   child: Row(
                     children: [
-                      Text("$price L.E" , style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold)),
+                      Text("${widget.price} L.E" , style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold)),
                       Spacer(),
                       Text("4.7" , style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold)),
                       Icon(Icons.star,color: AppColors.SecondaryColor,)
@@ -79,8 +88,9 @@ class ItemScreen extends StatelessWidget {
                   ),
                 ), // PRICE AND RATING
                 Padding(
-                  padding: const EdgeInsets.only(left: 37.0),
+                  padding: const EdgeInsets.only(left: 25.0,right: 25,top: 2,),
                   child: Row(
+
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,6 +103,34 @@ class ItemScreen extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (favList.any((item) => item['id'] == searchCubit.searchModel?.datalIST[widget.index].id)) {
+                              favList.removeWhere((item) => item['id'] == searchCubit.searchModel?.datalIST[widget.index].id);
+                              print("Removed item from the set: $favList");
+                            } else {
+                              favList.add({
+                                'id': searchCubit.searchModel?.datalIST[widget.index].id,
+                                'name': searchCubit.searchModel?.datalIST[widget.index].name,
+                                'price': searchCubit.searchModel?.datalIST[widget.index].price,
+                                'image': searchCubit.searchModel?.datalIST[widget.index].image,
+                              });
+                              print("Added item to the set: $favList");
+                            }
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child:
+                          favList.any((item) => item['id'] == searchCubit.searchModel?.datalIST[widget.index].id)
+                                ? Icon(Icons.favorite, color: AppColors.SecondaryColor,size: 40,)
+                                : Icon(Icons.favorite_border, color: AppColors.SecondaryColor,size:40,),
+
+                          ),
+                      ),
+
+                      Spacer(),
                       Column(
                         children: [
                           Padding(
@@ -102,20 +140,7 @@ class ItemScreen extends StatelessWidget {
                           Text("Cash on  \n Delivery",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300),)
                         ],
                       ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Icon(Icons.assignment_return,color: Colors.lightBlue,size: 30),
-                            ),
-                            Text("     14 day \n return policy",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300))
-                          ],
-                        ),
-                      ),
+
 
 
                     ],
@@ -125,7 +150,7 @@ class ItemScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 17),
                   child: InkWell(
                     onTap: () {
-                      cartList.add(CartItem(img: img, name: text, desc: desc, price: price ,index: cartList.length,));
+                      cartList.add(CartItem(img: widget.img, name: widget.text, desc: widget.desc, price: widget.price ,index: cartList.length,));
                       print("addded");
                       Fluttertoast.showToast(
                         msg: "Item added",

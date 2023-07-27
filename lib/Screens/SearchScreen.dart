@@ -14,7 +14,6 @@ class SearchScreen extends StatefulWidget {
 }
 bool loveIcon = true ;
 int currentIndex = 0 ;
-Set favList = {};
 class _SearchScreenState extends State<SearchScreen> {
   GlobalKey<FormState> formkey = GlobalKey();
 
@@ -145,22 +144,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                         ),),
                                         Spacer(),
                                           IconButton(
-                                            icon:favList.contains(searchCubit.searchModel?.datalIST[index].id) ?
-                                            Icon(Icons.favorite,color: AppColors.SecondaryColor,) :
-                                            Icon(Icons.favorite_border , color: AppColors.SecondaryColor,),
+                                            icon: favList.any((item) => item['id'] == searchCubit.searchModel?.datalIST[index].id)
+                                                ? Icon(Icons.favorite, color: AppColors.SecondaryColor)
+                                                : Icon(Icons.favorite_border, color: AppColors.SecondaryColor),
                                             onPressed: () {
                                               setState(() {
-                                                if (favList.contains(searchCubit.searchModel?.datalIST[index].id)) {
-                                                  favList.remove(searchCubit.searchModel?.datalIST[index].id);
+                                                if (favList.any((item) => item['id'] == searchCubit.searchModel?.datalIST[index].id)) {
+                                                  favList.removeWhere((item) => item['id'] == searchCubit.searchModel?.datalIST[index].id);
                                                   print("Removed item from the set: $favList");
-                                                  print("${BlocProvider.of<LoginCubit>(context).loginModel?.data?.name}");
                                                 } else {
-                                                  favList.add(searchCubit.searchModel?.datalIST[index].id);
+                                                  favList.add({
+                                                    'id': searchCubit.searchModel?.datalIST[index].id,
+                                                    'name': searchCubit.searchModel?.datalIST[index].name,
+                                                    'price': searchCubit.searchModel?.datalIST[index].price,
+                                                    'image': searchCubit.searchModel?.datalIST[index].image,
+                                                  });
                                                   print("Added item to the set: $favList");
                                                 }
                                               });
                                             },
-                                          ),
+                                          )
 
                                         ]
                                       ),

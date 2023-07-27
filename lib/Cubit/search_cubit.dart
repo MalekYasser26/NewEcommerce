@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:new_ecommerce/Models/FavModel.dart';
 
 import '../Models/SearchModel.dart';
 part 'search_state.dart';
@@ -12,6 +13,7 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit() : super(SearchInitialState());
   SearchModel ? searchModel ;
+  FavModel ? favModel ;
   int dataListLength =0 ;
   final SearchedDATAController = TextEditingController();
 
