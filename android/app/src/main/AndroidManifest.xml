@@ -1,10 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.new_ecommerce">
-   <application
-        android:label="new_ecommerce"
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+    <application
+            android:label="E-Commerce"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <activity
+
+
+       <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
